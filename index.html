@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
+        /* --- CSS VARIABLES & RESET --- */
         :root {
             --gold: #d4af37;
             --gold-hover: #b4932a;
@@ -32,6 +33,7 @@
             background-color: var(--black);
             color: var(--light-text);
             line-height: 1.6;
+            overflow-x: hidden; /* Prevents horizontal scroll on mobile */
         }
 
         h1, h2, h3 {
@@ -48,10 +50,11 @@
         img {
             display: block;
             width: 100%;
-            height: auto;
+            height: auto; /* Maintains aspect ratio */
+            max-width: 100%;
         }
 
-        /* --- Navigation --- */
+        /* --- RESPONSIVE NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
@@ -63,22 +66,26 @@
             align-items: center;
             z-index: 1000;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .logo img {
             height: 50px; 
+            width: auto;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
+            align-items: center;
         }
 
         .nav-links a {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 500;
         }
 
         .nav-links a:hover {
@@ -86,13 +93,14 @@
         }
 
         .cta-btn {
-            padding: 10px 25px;
+            padding: 10px 20px;
             background: var(--gold);
             color: var(--black);
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 2px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.8rem;
         }
 
         .cta-btn:hover {
@@ -100,10 +108,10 @@
             color: white;
         }
 
-        /* --- Hero Section --- */
+        /* --- HERO SECTION --- */
         header {
             height: 100vh;
-            /* Main Wardrobe Image as Hero Background */
+            min-height: 600px;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('1000088269.jpg'); 
             background-size: cover;
             background-position: center;
@@ -114,11 +122,17 @@
             padding: 0 20px;
         }
 
+        .hero-content {
+            width: 100%;
+            max-width: 900px;
+        }
+
         header h1 {
-            font-size: 3.5rem;
+            font-size: 3.5rem; /* PC Size */
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            line-height: 1.2;
         }
 
         header p {
@@ -128,9 +142,9 @@
             color: white;
         }
 
-        /* --- General Layout --- */
+        /* --- COMMON LAYOUT CLASSES --- */
         .section-padding {
-            padding: 80px 10%;
+            padding: 80px 8%;
         }
 
         .bg-dark {
@@ -153,10 +167,10 @@
             margin: 15px auto 0;
         }
 
-        /* --- About Section --- */
+        /* --- ABOUT SECTION (GRID) --- */
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr; /* 2 Columns on PC */
             gap: 50px;
             align-items: center;
         }
@@ -164,6 +178,7 @@
         .about-img img {
             border: 1px solid var(--gold);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
 
         .mission-vision {
@@ -174,14 +189,15 @@
 
         .mv-card {
             background: var(--dark-grey);
-            padding: 20px;
+            padding: 25px;
             border-left: 2px solid var(--gold);
+            flex: 1;
         }
 
-        /* --- Signature Projects (New Wardrobes) --- */
+        /* --- SIGNATURE PROJECTS (GRID) --- */
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Flexible columns */
             gap: 40px;
             margin-bottom: 50px;
         }
@@ -194,13 +210,9 @@
         }
 
         .showcase-item img {
-            height: 600px; /* Tall images for wardrobes */
+            height: 500px;
             object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .showcase-item:hover img {
-            transform: scale(1.01);
+            width: 100%;
         }
 
         .showcase-caption {
@@ -208,11 +220,10 @@
             text-align: center;
             font-size: 1.2rem;
             color: var(--gold);
-            letter-spacing: 1px;
             font-family: 'Playfair Display', serif;
         }
 
-        /* --- Customization Section --- */
+        /* --- CUSTOMIZATION BLOCK --- */
         .custom-block {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -224,10 +235,11 @@
             border-radius: 4px;
         }
 
-        /* --- Hardware Grid --- */
-        .hardware-grid {
+        /* --- HARDWARE & GALLERY GRIDS (Responsive Auto-Fill) --- */
+        .hardware-grid, .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            /* Auto-fill ensures it fits as many as possible per line based on width */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
             gap: 25px;
         }
 
@@ -245,30 +257,39 @@
         }
 
         .hardware-card img {
-            height: 200px;
-            object-fit: cover; /* or contain, depending on image aspect */
+            height: 180px;
             object-fit: contain;
-            background: #fff; /* White bg for hardware parts to see detail */
+            background: #fff;
+            width: 100%;
             margin-bottom: 15px;
             border-radius: 2px;
         }
 
-        .hardware-title {
-            font-size: 1rem;
-            color: var(--light-text);
-            font-weight: 600;
+        .gallery-grid img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            opacity: 0.85;
+            transition: 0.3s;
         }
 
-        /* --- Services --- */
+        .gallery-grid img:hover {
+            opacity: 1;
+            transform: scale(1.03);
+            z-index: 2;
+        }
+
+        /* --- SERVICES --- */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
 
         .service-card {
             background: var(--black);
-            padding: 30px;
+            padding: 40px 30px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.1);
             transition: 0.3s;
@@ -279,39 +300,15 @@
             border-color: var(--gold);
         }
 
-        /* --- Brands --- */
-        .brands-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .brand-tag {
-            background: transparent;
-            border: 1px solid var(--muted-text);
-            padding: 8px 20px;
-            border-radius: 50px;
-            color: var(--muted-text);
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .brand-tag:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        /* --- Contact --- */
+        /* --- CONTACT SECTION --- */
         .contact-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 50px;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            gap: 40px;
         }
 
         .contact-info, .contact-map {
-            flex: 1;
+            flex: 1 1 400px; /* Grow, Shrink, Basis */
             min-width: 300px;
         }
 
@@ -323,42 +320,113 @@
             gap: 15px;
         }
 
-        .icon-gold {
-            color: var(--gold);
-            font-size: 1.2rem;
-        }
-
+        /* --- FOOTER --- */
         footer {
             background: black;
-            padding: 30px;
+            padding: 40px 20px;
             text-align: center;
             border-top: 1px solid #222;
             color: #666;
+        }
+
+        .brands-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .brand-tag {
+            border: 1px solid #444;
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: #888;
             font-size: 0.9rem;
         }
 
-        /* Mobile Responsive */
+        /* =========================================
+           MEDIA QUERIES (DEVICE ADAPTATION)
+           ========================================= */
+
+        /* Tablet (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            .section-padding { padding: 60px 5%; }
+            header h1 { font-size: 3rem; }
+            .about-grid { gap: 30px; }
+        }
+
+        /* Mobile / Small Tablet (max-width: 768px) */
         @media (max-width: 768px) {
+            
+            /* Navigation turns into a vertical stack */
             nav {
                 flex-direction: column;
                 padding: 15px;
+                position: relative; /* Unfix on mobile for easier scrolling if needed, or keep fixed */
+                position: fixed;
             }
+
+            .logo { margin-bottom: 15px; }
+
             .nav-links {
-                margin-top: 15px;
-                font-size: 0.8rem;
+                flex-direction: column;
+                width: 100%;
                 gap: 15px;
+                display: none; /* Hide initially or use JS. For static HTML, we keep it visible or stack it. */
+                display: flex; /* Keeping it visible for simplicity */
+                background: var(--black);
+                padding-bottom: 10px;
             }
-            .about-grid, .custom-block {
-                grid-template-columns: 1fr;
-            }
+
+            /* Adjust Hero Text */
             header h1 {
                 font-size: 2.2rem;
+                letter-spacing: 1px;
             }
-            .showcase-grid {
-                grid-template-columns: 1fr;
+            
+            header p {
+                font-size: 1rem;
             }
+
+            /* Stack Grids vertically */
+            .about-grid, 
+            .custom-block {
+                grid-template-columns: 1fr; /* 1 Column */
+            }
+
+            /* Adjust Images in showcases */
             .showcase-item img {
-                height: 450px;
+                height: 400px;
+            }
+
+            /* Mission/Vision Stack */
+            .mission-vision {
+                flex-direction: column;
+            }
+
+            /* Reduce text sizes */
+            .section-title { font-size: 2rem; }
+
+            /* Contact Map area */
+            .contact-info, .contact-map {
+                flex-basis: 100%;
+            }
+        }
+
+        /* Small Phones (max-width: 480px) */
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.8rem; }
+            .section-padding { padding: 50px 20px; }
+            
+            .hardware-grid, .gallery-grid {
+                grid-template-columns: 1fr; /* 1 item per row on very small screens */
+            }
+            
+            .cta-btn {
+                width: 100%;
+                display: block;
+                text-align: center;
             }
         }
     </style>
@@ -374,12 +442,13 @@
             <a href="#about">About</a>
             <a href="#signature">Signature</a>
             <a href="#hardware">Hardware</a>
+            <a href="#gallery">Gallery</a>
             <a href="#contact" class="cta-btn">Contact</a>
         </div>
     </nav>
 
     <header id="home">
-        <div>
+        <div class="hero-content">
             <h1>Radhika Aluminium Profile</h1>
             <p>Elegance in Aluminium. Perfection in Hardware.</p>
             <a href="#contact" class="cta-btn">Get a Quote</a>
@@ -413,11 +482,10 @@
 
     <section id="signature" class="section-padding bg-dark">
         <h2 class="section-title">Signature Collections</h2>
-        <p style="text-align:center; color:var(--muted-text); margin-bottom: 40px;">State-of-the-art aluminium joinery and glasswork.</p>
         
         <div class="showcase-grid">
             <div class="showcase-item">
-                <img src="1000088258.jpg" alt="Luxury Glass Wardrobe with Lighting">
+                <img src="1000088258.jpg" alt="Luxury Glass Wardrobe">
                 <div class="showcase-caption">Integrated Lighting Wardrobes</div>
             </div>
             <div class="showcase-item">
@@ -428,16 +496,16 @@
 
         <div class="custom-block">
             <div>
-                <img src="1000088262.jpg" alt="Profile Color Options" style="border-radius:4px;">
+                <img src="1000088262.jpg" alt="Profile Color Options">
             </div>
             <div>
                 <h3>Customization at its Best</h3>
-                <p>We offer a wide range of profile colors and finishes to match your interior theme. </p>
+                <p>We offer a wide range of profile colors and finishes to match your interior theme.</p>
                 <br>
                 <ul style="list-style: none; color: var(--muted-text);">
-                    <li style="margin-bottom:10px;">★ <strong>Gold & Rose Gold:</strong> For a luxurious touch.</li>
-                    <li style="margin-bottom:10px;">★ <strong>Matte Black & Grey:</strong> For modern minimalism.</li>
-                    <li style="margin-bottom:10px;">★ <strong>Anodized Finish:</strong> Ensures scratch resistance and longevity.</li>
+                    <li style="margin-bottom:10px;">★ <strong>Gold & Rose Gold:</strong> Luxury Anodized Finish.</li>
+                    <li style="margin-bottom:10px;">★ <strong>Matte Black & Grey:</strong> Modern Minimalist.</li>
+                    <li style="margin-bottom:10px;">★ <strong>Brush Finish:</strong> Premium Texture.</li>
                 </ul>
             </div>
          </div>
@@ -454,7 +522,7 @@
             </div>
             <div class="hardware-card">
                 <img src="1000088256.jpg" alt="Sliding Lock System">
-                <div class="hardware-title">Integrated Sliding Locks</div>
+                <div class="hardware-title">Integrated Locks</div>
             </div>
             <div class="hardware-card">
                 <img src="1000088255.jpg" alt="Recessed Handle">
@@ -462,24 +530,37 @@
             </div>
             <div class="hardware-card">
                 <img src="1000088254.jpg" alt="Black Hardware Kit">
-                <div class="hardware-title">Complete Installation Kits</div>
+                <div class="hardware-title">Installation Kits</div>
             </div>
             <div class="hardware-card">
                 <img src="1000088251.jpg" alt="Pivot Hinge">
-                <div class="hardware-title">Heavy Duty Pivot Systems</div>
+                <div class="hardware-title">Pivot Systems</div>
             </div>
             <div class="hardware-card">
                 <img src="1000088253.jpg" alt="Glass Door Lock">
-                <div class="hardware-title">Security Glass Locks</div>
+                <div class="hardware-title">Glass Locks</div>
             </div>
             <div class="hardware-card">
                 <img src="1000088250.jpg" alt="Roller Mechanism">
-                <div class="hardware-title">Silent Roller Mechanisms</div>
+                <div class="hardware-title">Silent Rollers</div>
             </div>
             <div class="hardware-card">
                 <img src="1000088248.jpg" alt="Bottom Track">
-                <div class="hardware-title">Slim Bottom Tracks</div>
+                <div class="hardware-title">Slim Tracks</div>
             </div>
+        </div>
+    </section>
+    
+    <section id="gallery" class="section-padding bg-dark">
+        <h2 class="section-title">Technical Gallery</h2>
+        <div class="gallery-grid">
+             <img src="1000088272.jpg" alt="Profile Specs">
+             <img src="1000088276.jpg" alt="Colors">
+             <img src="1000088277.jpg" alt="Handles">
+             <img src="1000088264.jpg" alt="Cross Section">
+             <img src="1000088266.jpg" alt="Textured Glass">
+             <img src="1000088263.jpg" alt="Gold Frames">
+             <img src="1000088275.jpg" alt="Tech Drawings">
         </div>
 
         <div style="text-align: center; margin-top: 60px;">
@@ -495,7 +576,7 @@
         </div>
     </section>
 
-    <section class="section-padding bg-dark">
+    <section class="section-padding">
         <h2 class="section-title">Our Expertise</h2>
         <div class="services-grid">
             <div class="service-card">
@@ -517,33 +598,33 @@
         </div>
     </section>
 
-    <section id="contact" class="section-padding">
+    <section id="contact" class="section-padding bg-dark">
         <h2 class="section-title">Contact Us</h2>
         <div class="contact-container">
             <div class="contact-info">
                 <div class="contact-item">
-                    <span class="icon-gold">📍</span>
+                    <span style="color:var(--gold); font-size:1.5rem;">📍</span>
                     <div>
                         <strong>Visit Us</strong><br>
                         SK Bole Rd, Omkar Society, Dadar West,<br> Mumbai – 400028
                     </div>
                 </div>
                 <div class="contact-item">
-                    <span class="icon-gold">📱</span>
+                    <span style="color:var(--gold); font-size:1.5rem;">📱</span>
                     <div>
                         <strong>Call Us</strong><br>
                         +91 99878 76837 / +91 99835 40110
                     </div>
                 </div>
                 <div class="contact-item">
-                    <span class="icon-gold">💬</span>
+                    <span style="color:var(--gold); font-size:1.5rem;">💬</span>
                     <div>
                         <strong>WhatsApp</strong><br>
                         +91 99876 97551
                     </div>
                 </div>
                 <div class="contact-item">
-                    <span class="icon-gold">📧</span>
+                    <span style="color:var(--gold); font-size:1.5rem;">📧</span>
                     <div>
                         <strong>Email</strong><br>
                         radhikainteriors2@gmail.com
@@ -562,4 +643,3 @@
 
 </body>
 </html>
-
